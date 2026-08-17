@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Disclaimer — VentiveMail</title>
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          VentiveMail
+        </a>
+        <a class="btn btn-primary btn-nav" href="index.html">Home</a>
+      </div>
+    </header>
+    <main class="legal container">
+      <h1>Disclaimer</h1>
+      <p class="meta">Last updated: August 2026</p>
+      <p>
+        Revenue figures, case studies, and testimonials on this website reflect results achieved for specific clients
+        under specific conditions. They are illustrative and not a guarantee that you will achieve the same results.
+      </p>
+      <h2>Contractual guarantee</h2>
+      <p>
+        Where VentiveMail offers a contractual revenue guarantee (for example $60k+ in new email &amp; SMS revenue
+        within 30 days), the exact terms, eligibility criteria, measurement method, and remedies are defined only in the
+        signed client agreement. Marketing copy on this site does not replace that agreement.
+      </p>
+      <h2>No financial advice</h2>
+      <p>
+        Nothing on this site is financial, legal, or tax advice. You are responsible for decisions about your business
+        and marketing spend.
+      </p>
+      <h2>Third-party tools</h2>
+      <p>
+        References to Klaviyo, Typeform, YouTube, and other platforms are for descriptive purposes. We are not
+        affiliated with or endorsed by those companies unless explicitly stated.
+      </p>
+    </main>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="footer-copy">© <span id="year"></span> VentiveMail</p>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

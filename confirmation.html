@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Application received — VentiveMail</title>
+    <meta name="robots" content="noindex" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          VentiveMail
+        </a>
+        <a class="btn btn-primary btn-nav" href="index.html">Back to home</a>
+      </div>
+    </header>
+    <main class="confirm">
+      <div>
+        <h1>You’re in. We’ll be in touch.</h1>
+        <p>
+          Thanks for applying. If you’re a fit for the $60k+ guarantee offer, we’ll reach out shortly to schedule your strategy call.
+        </p>
+        <a class="btn btn-primary" href="index.html">Back to home</a>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p class="footer-copy">© <span id="year"></span> VentiveMail. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
