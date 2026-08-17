@@ -1,22 +1,6 @@
 (function () {
   const TYPEFORM_ID = "MXEtbebV";
 
-  /* Mobile nav */
-  const toggle = document.querySelector("[data-nav-toggle]");
-  const links = document.querySelector("[data-nav-links]");
-  if (toggle && links) {
-    toggle.addEventListener("click", () => {
-      const open = links.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    links.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        links.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
-
   /* Typeform modal */
   const modal = document.querySelector("[data-modal]");
   const modalBody = document.querySelector("[data-modal-body]");
@@ -68,19 +52,13 @@
     }
   }
 
-  /* Inline typeform on apply section / confirmation redirect */
   const inline = document.querySelector("[data-typeform-inline]");
   if (inline) {
     inline.dataset.tfLive = TYPEFORM_ID;
     inline.dataset.tfOpacity = "100";
     inline.dataset.tfTransitiveSearchParams = "true";
     inline.dataset.tfMedium = "snippet";
-    inline.dataset.tfOnSubmit = "redirectToConfirmation";
   }
-
-  window.redirectToConfirmation = function () {
-    window.location.href = "confirmation.html";
-  };
 
   /* Lazy-load YouTube iframes when near viewport */
   if ("IntersectionObserver" in window) {
