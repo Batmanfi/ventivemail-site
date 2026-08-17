@@ -1,16 +1,50 @@
 (function () {
-  const TYPEFORM_ID = "MXEtbebV";
+  const FORM_ID = "MXEtbebV";
 
-  /* Typeform modal */
+  /* Defaults from Framer TypeformInline instances */
+  const formProps = {
+    formId: FORM_ID,
+    autoResize: false,
+    minHeight: 400,
+    maxHeight: 800,
+    opacity: 100,
+    hideHeaders: false,
+    hideFooter: false,
+    keepSession: false,
+    forwardParams: true,
+    onlyTheseParams: "",
+    hiddenFields: "",
+    redirectTarget: "_parent",
+    emitEvents: true,
+  };
+
+  /* Inline application form (bottom of page) */
+  const inline = document.querySelector("[data-typeform-inline]");
+  if (inline && window.VentiveTypeform) {
+    window.VentiveTypeform.mount(inline, formProps);
+  }
+
+  /* Typeform modal for Schedule a Call CTAs */
   const modal = document.querySelector("[data-modal]");
   const modalBody = document.querySelector("[data-modal-body]");
-  let widgetMounted = false;
+  let modalUnmount = null;
+  let modalMounted = false;
 
   function openModal() {
-    if (!modal) return;
+    if (!modal || !modalBody || !window.VentiveTypeform) return;
     modal.classList.add("is-open");
     document.body.style.overflow = "hidden";
-    mountTypeform(modalBody);
+
+    if (!modalMounted) {
+      modalBody.innerHTML = "";
+      const host = document.createElement("div");
+      host.className = "typeform-embed";
+      host.style.minHeight = "100%";
+      host.style.height = "100%";
+      modalBody.appendChild(host);
+      modalUnmount = window.VentiveTypeform.mount(host, formProps);
+      modalMounted = true;
+    }
   }
 
   function closeModal() {
@@ -19,52 +53,32 @@
     document.body.style.overflow = "";
   }
 
-  document.querySelectorAll("[data-open-typeform]").forEach((el) => {
-    el.addEventListener("click", (e) => {
+  document.querySelectorAll("[data-open-typeform]").forEach(function (el) {
+    el.addEventListener("click", function (e) {
       e.preventDefault();
       openModal();
     });
   });
 
-  document.querySelectorAll("[data-close-modal]").forEach((el) => {
+  document.querySelectorAll("[data-close-modal]").forEach(function (el) {
     el.addEventListener("click", closeModal);
   });
 
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeModal();
   });
 
-  function mountTypeform(container) {
-    if (!container || widgetMounted) return;
-    const div = document.createElement("div");
-    div.className = "typeform-embed";
-    div.dataset.tfLive = TYPEFORM_ID;
-    div.dataset.tfOpacity = "100";
-    div.dataset.tfIframeProps = "title=Schedule a Call";
-    div.dataset.tfTransitiveSearchParams = "true";
-    div.dataset.tfMedium = "snippet";
-    div.style.minHeight = "520px";
-    container.appendChild(div);
-    widgetMounted = true;
-
-    if (window.tf && typeof window.tf.load === "function") {
-      window.tf.load();
-    }
-  }
-
-  const inline = document.querySelector("[data-typeform-inline]");
-  if (inline) {
-    inline.dataset.tfLive = TYPEFORM_ID;
-    inline.dataset.tfOpacity = "100";
-    inline.dataset.tfTransitiveSearchParams = "true";
-    inline.dataset.tfMedium = "snippet";
-  }
+  /* Redirect after submit if Typeform ending screen is not configured */
+  window.addEventListener("typeform-submit", function () {
+    /* Prefer Typeform's own ending-screen redirect; fallback: */
+    // window.location.href = "confirmation.html";
+  });
 
   /* Lazy-load YouTube iframes when near viewport */
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      function (entries) {
+        entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           const el = entry.target;
           const src = el.getAttribute("data-src");
@@ -77,9 +91,11 @@
       },
       { rootMargin: "200px" }
     );
-    document.querySelectorAll("iframe[data-src]").forEach((iframe) => io.observe(iframe));
+    document.querySelectorAll("iframe[data-src]").forEach(function (iframe) {
+      io.observe(iframe);
+    });
   } else {
-    document.querySelectorAll("iframe[data-src]").forEach((iframe) => {
+    document.querySelectorAll("iframe[data-src]").forEach(function (iframe) {
       iframe.setAttribute("src", iframe.getAttribute("data-src"));
     });
   }
