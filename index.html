@@ -425,13 +425,13 @@
         </div>
       </section>
 
-      <!-- Application -->
+      <!-- Application — full-viewport Typeform (same as Framer) -->
       <section class="apply" id="apply">
-        <div class="container">
-          <div class="apply-box">
-            <h2>Fill this application</h2>
-            <div class="typeform-embed" data-typeform-inline></div>
-          </div>
+        <div class="apply-head">
+          <h2>Fill this application</h2>
+        </div>
+        <div class="apply-form">
+          <div class="typeform-embed" data-typeform-inline></div>
         </div>
       </section>
     </main>
@@ -452,23 +452,16 @@
       </div>
     </footer>
 
-    <!-- Typeform modal -->
-    <div class="modal" data-modal role="dialog" aria-modal="true" aria-label="Schedule a Call" hidden>
-      <div class="modal-backdrop" data-close-modal></div>
+    <!-- Full-screen Typeform overlay (Schedule a Call) -->
+    <div class="modal" data-modal role="dialog" aria-modal="true" aria-label="Application" hidden>
       <div class="modal-panel">
-        <div class="modal-header">
-          <h3>Schedule a Call</h3>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
-        </div>
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
         <div class="modal-body" data-modal-body></div>
       </div>
     </div>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
-      // Unhide modal element for a11y (we control via class)
-      const m = document.querySelector("[data-modal]");
-      if (m) m.removeAttribute("hidden");
     </script>
     <script src="js/typeform-inline.js"></script>
     <script src="js/main.js"></script>

@@ -1,7 +1,7 @@
 (function () {
   const FORM_ID = "MXEtbebV";
 
-  /* Defaults from Framer TypeformInline instances */
+  /* Same props as Framer TypeformInline instances */
   const formProps = {
     formId: FORM_ID,
     autoResize: false,
@@ -18,31 +18,29 @@
     emitEvents: true,
   };
 
-  /* Inline application form (bottom of page) */
+  /* Bottom full-viewport application form */
   const inline = document.querySelector("[data-typeform-inline]");
   if (inline && window.VentiveTypeform) {
     window.VentiveTypeform.mount(inline, formProps);
   }
 
-  /* Typeform modal for Schedule a Call CTAs */
+  /* Full-screen overlay for Schedule a Call CTAs */
   const modal = document.querySelector("[data-modal]");
   const modalBody = document.querySelector("[data-modal-body]");
-  let modalUnmount = null;
   let modalMounted = false;
 
   function openModal() {
     if (!modal || !modalBody || !window.VentiveTypeform) return;
     modal.classList.add("is-open");
+    modal.removeAttribute("hidden");
     document.body.style.overflow = "hidden";
 
     if (!modalMounted) {
       modalBody.innerHTML = "";
       const host = document.createElement("div");
       host.className = "typeform-embed";
-      host.style.minHeight = "100%";
-      host.style.height = "100%";
       modalBody.appendChild(host);
-      modalUnmount = window.VentiveTypeform.mount(host, formProps);
+      window.VentiveTypeform.mount(host, formProps);
       modalMounted = true;
     }
   }
@@ -50,6 +48,7 @@
   function closeModal() {
     if (!modal) return;
     modal.classList.remove("is-open");
+    modal.setAttribute("hidden", "");
     document.body.style.overflow = "";
   }
 
@@ -68,13 +67,7 @@
     if (e.key === "Escape") closeModal();
   });
 
-  /* Redirect after submit if Typeform ending screen is not configured */
-  window.addEventListener("typeform-submit", function () {
-    /* Prefer Typeform's own ending-screen redirect; fallback: */
-    // window.location.href = "confirmation.html";
-  });
-
-  /* Lazy-load YouTube iframes when near viewport */
+  /* Lazy-load YouTube iframes */
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
       function (entries) {
